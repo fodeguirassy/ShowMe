@@ -1,9 +1,11 @@
 package com.example.guirassy.tvshowme
 
 import android.app.Application
-import com.github.salomonbrys.kodein.Kodein
-import com.github.salomonbrys.kodein.KodeinAware
-import com.github.salomonbrys.kodein.lazy
+import android.content.Context
+import com.example.guirassy.tvshowme.model.kodein.modelKodeinModule
+import com.example.guirassy.tvshowme.platform.kodein.platformKodeinModule
+import com.example.guirassy.tvshowme.ui.uiKodeinModule
+import com.github.salomonbrys.kodein.*
 
 /**
  * TVShowMeApplication -
@@ -13,7 +15,10 @@ import com.github.salomonbrys.kodein.lazy
 class TVShowMeApplication : Application(), KodeinAware {
 
     override val kodein by Kodein.lazy {
-
+        //bind<Context>() with instance(applicationContext)
+        import(modelKodeinModule)
+        import(platformKodeinModule)
+        import(uiKodeinModule)
     }
 
 }

@@ -7,6 +7,5 @@ package com.example.guirassy.tvshowme.navigation
  */
 
 interface Navigator {
-
-
+    fun displayHomeScreen()
 }

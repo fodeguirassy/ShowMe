@@ -5,5 +5,9 @@ import com.ekino.mvp.BaseView
 
 interface HomeScreenContract {
     interface View : BaseView<Presenter>
-    interface Presenter : BasePresenter
+
+    interface Presenter : BasePresenter{
+        fun onFragmentLaunched()
+        fun pickARandomChar() : String
+    }
 }

@@ -74,6 +74,8 @@ dependencies {
     implementation 'com.github.salomonbrys.kodein:kodein:4.0.0'
     implementation 'com.github.salomonbrys.kodein:kodein-android:4.0.0'
 
+    implementation 'io.reactivex.rxjava2:rxjava:2.0.2'
+
     /**
      * UI Test Flavor
      */

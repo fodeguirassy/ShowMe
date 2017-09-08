@@ -8,10 +8,30 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.example.guirassy.tvshowme.navigation.Navigator
+import com.example.guirassy.tvshowme.navigation.AppFragmentNavigator
+import com.github.salomonbrys.kodein.Kodein
+import com.github.salomonbrys.kodein.KodeinInjector
+import com.github.salomonbrys.kodein.android.AppCompatActivityInjector
+import com.github.salomonbrys.kodein.bind
+import com.github.salomonbrys.kodein.instance
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
+    AppCompatActivityInjector
+{
+
+    override val injector =  KodeinInjector()
+
+    lateinit var navigator : AppFragmentNavigator
+
+    companion object {
+        /* static boolean to detect process killed and restore issue
+         * @see {@link FragmentNavigator#displayOrRestoreScreenOnActivityCreate()}
+         * */
+        private var isInitialized = false
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,13 +42,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
-
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+
+
+        navigator = AppFragmentNavigator(this, this.supportFragmentManager, R.id.fragment_container)
+        initializeInjector()
+
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        navigator.displayOrRestoreScreenOnActivityCreate(isInitialized)
     }
 
     override fun onBackPressed() {
@@ -81,4 +111,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
+
+    override fun onDestroy() {
+        destroyInjector()
+        super.onDestroy()
+    }
+
+    override fun provideOverridingModule() = Kodein.Module {
+        bind<Navigator>() with instance(navigator)
+    }
+
 }
