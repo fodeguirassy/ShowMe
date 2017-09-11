@@ -1,11 +1,12 @@
 package com.example.guirassy.tvshowme
 
 import android.app.Application
-import android.content.Context
 import com.example.guirassy.tvshowme.model.kodein.modelKodeinModule
 import com.example.guirassy.tvshowme.platform.kodein.platformKodeinModule
 import com.example.guirassy.tvshowme.ui.uiKodeinModule
-import com.github.salomonbrys.kodein.*
+import com.github.salomonbrys.kodein.Kodein
+import com.github.salomonbrys.kodein.KodeinAware
+import com.github.salomonbrys.kodein.lazy
 
 /**
  * TVShowMeApplication -

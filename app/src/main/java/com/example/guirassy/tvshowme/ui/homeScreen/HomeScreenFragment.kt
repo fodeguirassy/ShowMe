@@ -1,4 +1,4 @@
-package com.example.guirassy.tvshowme.ui
+package com.example.guirassy.tvshowme.ui.homeScreen
 
 
 import android.os.Bundle
@@ -19,10 +19,9 @@ class HomeScreenFragment : MvpFragment<HomeScreenContract.Presenter>(),
     override val defaultLayout: Int = R.layout.fragment_home_screen
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        initializeInjector()
-        
         super.onCreate(savedInstanceState)
-
+        initializeInjector()
+        presenter.onFragmentLaunched()
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {

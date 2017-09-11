@@ -1,9 +1,8 @@
 package com.example.guirassy.tvshowme.platform
 
 import com.example.guirassy.tvshowme.model.TVMazeObject
-import io.reactivex.Single
+import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 
 /**
  * TVMazeApiService -
@@ -12,10 +11,7 @@ import io.reactivex.schedulers.Schedulers
  */
 class TVMazeApiService (var tvMazeApiInterface: TVMazeApiInterface) {
 
-    val subscriptions = CompositeDisposable()
-
-    fun searchForShows(char : String) : Single<List<TVMazeObject>> {
+    fun searchForShows(char : String) : Observable<List<TVMazeObject>> {
         return tvMazeApiInterface.getShowsByChar(char)
-                .subscribeOn(Schedulers.io())
     }
 }

@@ -2,6 +2,7 @@ package com.example.guirassy.tvshowme.platform
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 /**
@@ -20,6 +21,7 @@ fun buildRetrofitClient(okHttpClient: OkHttpClient) : Retrofit {
             .client(okHttpClient)
             .baseUrl("http://api.tvmaze.com/")
             .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
 }
 

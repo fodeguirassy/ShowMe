@@ -1,4 +1,4 @@
-package com.example.guirassy.tvshowme.ui
+package com.example.guirassy.tvshowme.ui.homeScreen
 
 import com.ekino.mvp.BasePresenter
 import com.ekino.mvp.BaseView
