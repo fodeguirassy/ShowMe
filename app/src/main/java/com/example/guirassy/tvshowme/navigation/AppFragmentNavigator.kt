@@ -26,7 +26,6 @@ class AppFragmentNavigator(context: Context, fragmentManager: FragmentManager, c
     override fun displayHomeScreen() {
         val homeScreen = HomeScreenFragment()
         displayAndSetRootFragment(homeScreen)
-
     }
 
 }

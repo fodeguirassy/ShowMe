@@ -2,7 +2,6 @@ package com.example.guirassy.tvshowme.platform
 
 import com.example.guirassy.tvshowme.model.TVMazeObject
 import io.reactivex.Observable
-import io.reactivex.disposables.CompositeDisposable
 
 /**
  * TVMazeApiService -

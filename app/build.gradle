@@ -75,6 +75,7 @@ dependencies {
     implementation 'com.github.salomonbrys.kodein:kodein-android:4.0.0'
 
     implementation 'io.reactivex.rxjava2:rxjava:2.0.2'
+    implementation 'com.synnapps:carouselview:0.1.4'
 
     /**
      * UI Test Flavor
