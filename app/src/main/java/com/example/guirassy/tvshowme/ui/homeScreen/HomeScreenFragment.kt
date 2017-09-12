@@ -13,6 +13,9 @@ import com.github.salomonbrys.kodein.android.SupportFragmentInjector
 import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.instance
 import com.synnapps.carouselview.ImageListener
+import com.synnapps.carouselview.ViewListener
+import kotlinx.android.synthetic.main.carousel_view.*
+import kotlinx.android.synthetic.main.carousel_view.view.*
 
 import kotlinx.android.synthetic.main.fragment_home_screen.view.*
 
@@ -23,9 +26,10 @@ class HomeScreenFragment : MvpFragment<HomeScreenContract.Presenter>(),
     override val presenter: HomeScreenContract.Presenter by injector.instance()
     override val defaultLayout: Int = R.layout.fragment_home_screen
 
-    var randomShows: List<TVMazeObject> = listOf()
+    private var randomShows: List<TVMazeObject> = listOf()
 
-    lateinit var imageListener : ImageListener
+    private lateinit var imageListener : ImageListener
+    private lateinit var viewListener : ViewListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +44,20 @@ class HomeScreenFragment : MvpFragment<HomeScreenContract.Presenter>(),
             }
         }
 
+        viewListener = ViewListener { position ->
+            var v = layoutInflater.inflate(R.layout.carousel_view, null)
+
+            println("TESTING SHOW NAME ${randomShows[position].show.name}")
+
+
+            v.show_name.text = randomShows[position].show.name
+
+
+            Glide.with(view)
+                    .load(randomShows[position].show.image.original)
+                    .into(v.show_picture)
+            v
+        }
        // view?.carousel_home?.setImageListener(imageListener)
     }
 
@@ -51,13 +69,9 @@ class HomeScreenFragment : MvpFragment<HomeScreenContract.Presenter>(),
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-        presenter.onFragmentLaunched()
-
-        view.carousel_home.setImageListener(imageListener)
-        view.carousel_home.setImageClickListener{
-            position ->
-            println("Clicked show name is ${randomShows[position].show.name}")
+        view.carousel_home.setViewListener(viewListener)
+        view.carousel_home.setOnClickListener {
+            view ->
         }
 
     }
@@ -73,7 +87,6 @@ class HomeScreenFragment : MvpFragment<HomeScreenContract.Presenter>(),
 
     override fun onResume() {
         super.onResume()
-
-
+        presenter.onFragmentLaunched()
     }
 }

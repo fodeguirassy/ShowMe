@@ -5,6 +5,7 @@ import com.ekino.mvp.MvpPresenter
 import com.example.guirassy.tvshowme.model.TVMazeObject
 import com.example.guirassy.tvshowme.navigation.Navigator
 import com.example.guirassy.tvshowme.platform.TVMazeApiService
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -46,13 +47,16 @@ class HomeScreenPresenter(view: HomeScreenContract.View, navigator: Navigator, v
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     listOfShows ->
-                    view?.let {
-                        it.setShowsInCarousel(listOfShows.filter {
-                            it.show != null && it.show.image.medium != null
-                        })
-                    }
+
+                    println("TESTTT $listOfShows")
+
+                    view.setShowsInCarousel(listOfShows.filter {
+                        show -> show.show.image.medium != null
+                    })
+
                 }, { e ->
                     println("TESTTT $e")
+                    onFragmentLaunched()
                 })
         subscriptions.add(subscription)
     }
