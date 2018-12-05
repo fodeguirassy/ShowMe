@@ -14,8 +14,21 @@ import retrofit2.Retrofit
 val platformKodeinModule = Kodein.Module {
 
     bind<OkHttpClient>() with singleton { buildHttOkClient() }
-    bind<Retrofit>() with singleton { buildRetrofitClient(instance()) }
-    bind<TVMazeApiInterface>() with singleton { buildTVMazeApiInterface(instance()) }
     bind<TVMazeApiService>() with singleton { TVMazeApiService(instance()) }
 
+    //"http://api.tvmaze.com/"
+    //http://10.98.145.18:8080/
+
+    bind<Retrofit>("TVMazeApi") with singleton { buildRetrofitClient(instance(), instance()) }
+    bind<Retrofit>("CustomApi") with singleton { buildRetrofitForCustomApi(instance(), instance()) }
+
+
+
+
+
+    bind<CustomApi>() with singleton { buildCustomApiService(instance("CustomApi")) }
+    bind<TVMazeApiInterface>() with singleton { buildTVMazeApiService(instance("TVMazeApi")) }
+
+
+    bind<CustomApiService>() with singleton { CustomApiService(instance()) }
 }

@@ -16,15 +16,32 @@ fun buildHttOkClient() : OkHttpClient {
             .build()
 }
 
-fun buildRetrofitClient(okHttpClient: OkHttpClient) : Retrofit {
+fun buildRetrofitClient(okHttpClient: OkHttpClient, url : String = "http://api.tvmaze.com/") : Retrofit {
     return Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl("http://api.tvmaze.com/")
+            .baseUrl(url)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
 }
 
-fun buildTVMazeApiInterface(retrofit: Retrofit) : TVMazeApiInterface {
+//"http://api.tvmaze.com/"
+//http://10.98.145.18:8080/
+
+fun buildRetrofitForCustomApi(okHttpClient: OkHttpClient, url : String = "http://10.98.145.18:8080/") :  Retrofit {
+        return Retrofit.Builder()
+                .client(okHttpClient)
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build()
+}
+
+fun buildTVMazeApiService(retrofit: Retrofit) : TVMazeApiInterface {
     return retrofit.create(TVMazeApiInterface::class.java)
 }
+
+fun buildCustomApiService(retrofit: Retrofit) : CustomApi {
+        return retrofit.create(CustomApi::class.java)
+}
+

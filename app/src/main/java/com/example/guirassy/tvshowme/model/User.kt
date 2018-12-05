@@ -1,8 +1,12 @@
 package com.example.guirassy.tvshowme.model
 
 /**
- * TVMazeObject -
+ * User -
  * @author guirassy
  * @version $Id$
  */
-class TVMazeObject (var score : String, var show : Show)
+class User(
+
+        var id : String,
+        var name : String
+)

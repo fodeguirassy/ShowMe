@@ -12,7 +12,7 @@ import com.github.salomonbrys.kodein.provider
  * @version $Id$
  */
 
-
+/*
 val modelKodeinModule = Kodein.Module {
 
     bind<Rating>() with provider { Rating(instance()) }
@@ -26,3 +26,4 @@ val modelKodeinModule = Kodein.Module {
     bind<TVMazeObject>() with provider { TVMazeObject(instance(), instance()) }
 
 }
+        */

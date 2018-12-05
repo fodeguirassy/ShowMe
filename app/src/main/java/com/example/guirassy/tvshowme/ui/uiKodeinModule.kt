@@ -13,6 +13,6 @@ import com.github.salomonbrys.kodein.*
 
 val uiKodeinModule = Kodein.Module {
     bind() from singleton { ErrorDisplay(instance()) }
-    bind<HomeScreenContract.Presenter>() with provider { HomeScreenPresenter(instance(), instance(), instance()) }
+    bind<HomeScreenContract.Presenter>() with provider { HomeScreenPresenter(instance(), instance(), instance(),instance()) }
 }
 

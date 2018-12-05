@@ -37,7 +37,7 @@ class HomeScreenFragment : MvpFragment<HomeScreenContract.Presenter>(),
 
         imageListener = ImageListener{
             position, imageView ->
-            randomShows[position].show.image.medium?.let {
+            randomShows[position].show.image.medium.let {
                 Glide.with(view)
                         .load(randomShows[position].show.image.original)
                         .into(imageView)
@@ -47,22 +47,19 @@ class HomeScreenFragment : MvpFragment<HomeScreenContract.Presenter>(),
         viewListener = ViewListener { position ->
             var v = layoutInflater.inflate(R.layout.carousel_view, null)
 
-            println("TESTING SHOW NAME ${randomShows[position].show.name}")
-
-
             v.show_name.text = randomShows[position].show.name
-
-
             Glide.with(view)
                     .load(randomShows[position].show.image.original)
                     .into(v.show_picture)
+
+            v.add_movie_btn.setOnClickListener { _ -> presenter.getUserById("1") }
+
             v
         }
-       // view?.carousel_home?.setImageListener(imageListener)
     }
 
     override fun setShowsInCarousel(shows: List<TVMazeObject>) {
-        shows?.let {
+        shows.let {
             randomShows = shows
             view?.carousel_home?.pageCount = randomShows.size
         }
@@ -70,10 +67,6 @@ class HomeScreenFragment : MvpFragment<HomeScreenContract.Presenter>(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.carousel_home.setViewListener(viewListener)
-        view.carousel_home.setOnClickListener {
-            view ->
-        }
-
     }
 
     override fun provideOverridingModule() = Kodein.Module {

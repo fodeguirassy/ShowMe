@@ -1,20 +1,21 @@
 package com.example.guirassy.tvshowme.ui.homeScreen
 
-import android.support.annotation.MainThread
 import com.ekino.mvp.MvpPresenter
 import com.example.guirassy.tvshowme.model.TVMazeObject
+import com.example.guirassy.tvshowme.model.User
 import com.example.guirassy.tvshowme.navigation.Navigator
+import com.example.guirassy.tvshowme.platform.CustomApiService
 import com.example.guirassy.tvshowme.platform.TVMazeApiService
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import java.util.*
-import kotlinx.android.synthetic.main.fragment_home_screen.*
 
-class HomeScreenPresenter(view: HomeScreenContract.View, navigator: Navigator, val tvMazeApiService: TVMazeApiService) :
+class HomeScreenPresenter(view: HomeScreenContract.View, navigator: Navigator
+                          , val tvMazeApiService: TVMazeApiService, val customApiService: CustomApiService) :
         MvpPresenter<Navigator, HomeScreenContract.View>(view, navigator),
         HomeScreenContract.Presenter {
+
 
 
     private lateinit var subscriptions : CompositeDisposable
@@ -47,15 +48,10 @@ class HomeScreenPresenter(view: HomeScreenContract.View, navigator: Navigator, v
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     listOfShows ->
-
-                    println("TESTTT $listOfShows")
-
                     view.setShowsInCarousel(listOfShows.filter {
                         show -> show.show.image.medium != null
                     })
-
                 }, { e ->
-                    println("TESTTT $e")
                     onFragmentLaunched()
                 })
         subscriptions.add(subscription)
@@ -70,4 +66,14 @@ class HomeScreenPresenter(view: HomeScreenContract.View, navigator: Navigator, v
         subscriptions.clear()
     }
 
+    override fun getUserById(id: String): User? {
+        customApiService.getUserById(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    user: User?, throwable: Throwable? ->
+                    println("TEST ${user?.name}")
+                })
+        return null
+    }
 }
